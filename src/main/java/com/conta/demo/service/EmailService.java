@@ -9,6 +9,7 @@ import com.conta.demo.model.Email;
 import com.conta.demo.repository.ContaRepository;
 import com.conta.demo.repository.EmailRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,12 +24,14 @@ public class EmailService {
     }
 
     // Verificação de Id
+    @Transactional(readOnly = true)
     public Email verificarId(Long id) {
         return emailRepository.findById(id)
                 .orElseThrow(() -> new EmailNaoEncontradoException("Email não encontrado"));
     }
 
     // create
+    @Transactional
     public EmailResponse create(EmailRequest request) {
         if (emailRepository.existsByEmail(request.getEmail())) {
             throw new EmailJaCadastradoException("Email já cadastrado");
@@ -44,6 +47,7 @@ public class EmailService {
 
 
     // read
+    @Transactional
     public List<EmailResponse> read() {
         return emailRepository.findAll()
                 .stream()
@@ -52,6 +56,7 @@ public class EmailService {
     }
 
     // Update
+    @Transactional
     public EmailResponse update(Long id, EmailRequest request) {
         Email email = verificarId(id);
 
@@ -66,6 +71,7 @@ public class EmailService {
     }
 
     // Delete
+    @Transactional
     public void delete(Long id) {
         Email email = verificarId(id);
 
@@ -77,9 +83,8 @@ public class EmailService {
     }
 
     // Buscar por id
+    @Transactional(readOnly = true)
     public EmailResponse buscarPorId(Long id) {
-        Email email = verificarId(id);
-
-        return new EmailResponse(email);
+        return new EmailResponse(verificarId(id));
     }
 }

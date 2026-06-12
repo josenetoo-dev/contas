@@ -11,7 +11,7 @@ public class EmailRequest {
     private String email;
 
     @NotBlank
-    @Size(min = 8, max = 100)
+    @Size(min = 8, max = 100, message = "Senha deve conter 8 ou mais caracteres")
     private String senha;
 
     public EmailRequest() {

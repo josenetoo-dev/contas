@@ -2,6 +2,8 @@ package com.conta.demo.exception;
 
 import com.conta.demo.exception.conflit.EmailComContasCadastradasException;
 import com.conta.demo.exception.conflit.EmailJaCadastradoException;
+import com.conta.demo.exception.conflit.NomeJaExiste;
+import com.conta.demo.exception.notfound.CategoriaNaoEncontradaException;
 import com.conta.demo.exception.notfound.EmailNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             EmailJaCadastradoException.class,
-            EmailComContasCadastradasException.class
+            EmailComContasCadastradasException.class,
+            NomeJaExiste.class
     })
     public ResponseEntity<ErroResponse> tratarConflitos(RuntimeException ex) {
         return ResponseEntity
@@ -23,7 +26,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({
-            EmailNaoEncontradoException.class
+            EmailNaoEncontradoException.class,
+            CategoriaNaoEncontradaException.class
     })
     public ResponseEntity<ErroResponse> tratarNaoEncontrado(RuntimeException ex) {
         return ResponseEntity
