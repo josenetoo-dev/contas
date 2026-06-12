@@ -2,6 +2,7 @@ package com.conta.demo.dto.email;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class EmailRequest {
 
@@ -10,6 +11,7 @@ public class EmailRequest {
     private String email;
 
     @NotBlank
+    @Size(min = 8, max = 100)
     private String senha;
 
     public EmailRequest() {

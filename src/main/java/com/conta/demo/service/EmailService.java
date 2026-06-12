@@ -2,9 +2,11 @@ package com.conta.demo.service;
 
 import com.conta.demo.dto.email.EmailRequest;
 import com.conta.demo.dto.email.EmailResponse;
-import com.conta.demo.exception.conflit.EmailJáCadastradoException;
+import com.conta.demo.exception.conflit.EmailComContasCadastradasException;
+import com.conta.demo.exception.conflit.EmailJaCadastradoException;
 import com.conta.demo.exception.notfound.EmailNaoEncontradoException;
 import com.conta.demo.model.Email;
+import com.conta.demo.repository.ContaRepository;
 import com.conta.demo.repository.EmailRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,11 @@ import java.util.List;
 @Service
 public class EmailService {
     private final EmailRepository emailRepository;
-    public EmailService(EmailRepository emailRepository) {
+    private final ContaRepository contaRepository;
+
+    public EmailService(EmailRepository emailRepository, ContaRepository contaRepository) {
         this.emailRepository = emailRepository;
+        this.contaRepository = contaRepository;
     }
 
     // Verificação de Id
@@ -26,7 +31,7 @@ public class EmailService {
     // create
     public EmailResponse create(EmailRequest request) {
         if (emailRepository.existsByEmail(request.getEmail())) {
-            throw new EmailJáCadastradoException("Email já cadastrado");
+            throw new EmailJaCadastradoException("Email já cadastrado");
         }
 
         Email email = new Email(
@@ -51,7 +56,7 @@ public class EmailService {
         Email email = verificarId(id);
 
         if (emailRepository.existsByEmailAndIdNot(request.getEmail(), id)) {
-            throw new EmailJáCadastradoException("Email já cadastrado");
+            throw new EmailJaCadastradoException("Email já cadastrado");
         }
 
         email.setEmail(request.getEmail());
@@ -63,6 +68,10 @@ public class EmailService {
     // Delete
     public void delete(Long id) {
         Email email = verificarId(id);
+
+        if(contaRepository.existsByEmailId(id)) {
+            throw new EmailComContasCadastradasException("Não é possível deletar este email, pois existem contas cadastradas nele");
+        }
 
         emailRepository.delete(email);
     }
