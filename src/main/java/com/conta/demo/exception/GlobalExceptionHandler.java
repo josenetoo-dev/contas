@@ -1,8 +1,7 @@
 package com.conta.demo.exception;
 
-import com.conta.demo.exception.conflit.EmailComContasCadastradasException;
-import com.conta.demo.exception.conflit.EmailJaCadastradoException;
-import com.conta.demo.exception.conflit.NomeJaExiste;
+import com.conta.demo.exception.conflit.*;
+import com.conta.demo.exception.notfound.AplicacaoNaoEncontradaException;
 import com.conta.demo.exception.notfound.CategoriaNaoEncontradaException;
 import com.conta.demo.exception.notfound.EmailNaoEncontradoException;
 import org.springframework.http.HttpStatus;
@@ -15,9 +14,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({
-            EmailJaCadastradoException.class,
+            AplicacaoComContasException.class,
+            CategoriaComContaException.class,
+            CategoriaJaExisteException.class,
             EmailComContasCadastradasException.class,
-            NomeJaExiste.class
+            EmailJaCadastradoException.class,
+            NomeJaExisteException.class
     })
     public ResponseEntity<ErroResponse> tratarConflitos(RuntimeException ex) {
         return ResponseEntity
@@ -27,7 +29,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             EmailNaoEncontradoException.class,
-            CategoriaNaoEncontradaException.class
+            CategoriaNaoEncontradaException.class,
+            AplicacaoNaoEncontradaException.class
     })
     public ResponseEntity<ErroResponse> tratarNaoEncontrado(RuntimeException ex) {
         return ResponseEntity

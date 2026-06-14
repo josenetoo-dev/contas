@@ -9,10 +9,6 @@ public class CategoriaRequest {
     public CategoriaRequest() {
     }
 
-    public CategoriaRequest(String nome) {
-        this.nome = nome;
-    }
-
     public String getNome() {
         return nome;
     }

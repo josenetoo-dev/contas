@@ -3,12 +3,11 @@ package com.conta.demo.service;
 import com.conta.demo.dto.categoria.CategoriaRequest;
 import com.conta.demo.dto.categoria.CategoriaResponse;
 import com.conta.demo.exception.conflit.CategoriaComContaException;
-import com.conta.demo.exception.conflit.NomeJaExiste;
+import com.conta.demo.exception.conflit.NomeJaExisteException;
 import com.conta.demo.exception.notfound.CategoriaNaoEncontradaException;
 import com.conta.demo.model.Categoria;
 import com.conta.demo.repository.AplicacaoRepository;
 import com.conta.demo.repository.CategoriaRepository;
-import com.conta.demo.repository.ContaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +35,7 @@ public class CategoriaService {
     @Transactional
     public CategoriaResponse create(CategoriaRequest request) {
         if (categoriaRepository.existsByNome(request.getNome())) {
-            throw new NomeJaExiste("Nome já existe");
+            throw new NomeJaExisteException("Nome já existe");
         }
 
         Categoria categoria = new Categoria(
@@ -61,7 +60,7 @@ public class CategoriaService {
         Categoria categoria = verificarId(id);
 
         if (categoriaRepository.existsByNomeAndIdNot(request.getNome(), id)) {
-            throw new NomeJaExiste("Nome já existe");
+            throw new NomeJaExisteException("Nome já existe");
         }
 
         categoria.setNome(request.getNome());
