@@ -2,7 +2,6 @@ package com.conta.demo.service;
 
 import com.conta.demo.dto.aplicacao.AplicacaoRequest;
 import com.conta.demo.dto.aplicacao.AplicacaoResponse;
-import com.conta.demo.dto.categoria.CategoriaResponse;
 import com.conta.demo.exception.conflit.AplicacaoComContasException;
 import com.conta.demo.exception.conflit.NomeJaExisteException;
 import com.conta.demo.exception.notfound.AplicacaoNaoEncontradaException;
@@ -34,7 +33,7 @@ public class AplicacaoService {
     @Transactional(readOnly = true)
     public Aplicacao verificarId(Long id)  {
         return aplicacaoRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria não enccntrada"));
+                .orElseThrow(() -> new AplicacaoNaoEncontradaException("Aplicação não encontrada"));
     }
 
     // create
@@ -69,7 +68,7 @@ public class AplicacaoService {
         Aplicacao aplicacao = verificarId(id);
 
         if (aplicacaoRepository.existsByNomeAndIdNot(request.getNome(), id)) {
-            throw new AplicacaoNaoEncontradaException("Já existe aplicação com esse nome");
+            throw new NomeJaExisteException("Já existe aplicação com esse nome");
         }
 
         Categoria categoria = categoriaRepository.findById(request.getCategoriaId())
@@ -108,7 +107,7 @@ public class AplicacaoService {
     public List<AplicacaoResponse> buscarPorNomeDaCategoria(String nome) {
 
         if (!categoriaRepository.existsByNome(nome)) {
-            throw new CategoriaNaoEncontradaException("Categoria não encotrada");
+            throw new CategoriaNaoEncontradaException("Categoria não encontrada");
         }
 
         return aplicacaoRepository.findByCategoriaNomeIgnoreCase(nome)

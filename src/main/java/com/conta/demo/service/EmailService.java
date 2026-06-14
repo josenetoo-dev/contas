@@ -47,7 +47,7 @@ public class EmailService {
 
 
     // read
-    @Transactional
+    @Transactional(readOnly = true)
     public List<EmailResponse> read() {
         return emailRepository.findAll()
                 .stream()

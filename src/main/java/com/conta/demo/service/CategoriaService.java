@@ -75,7 +75,7 @@ public class CategoriaService {
         Categoria categoria = verificarId(id);
 
         if (aplicacaoRepository.existsByCategoriaId(categoria.getId())) {
-            throw new CategoriaComContaException("Essa categria possui contas");
+            throw new CategoriaComContaException("Não é possível excluir esta categoria, pois existem aplicações cadastradas nela");
         }
 
         categoriaRepository.delete(categoria);

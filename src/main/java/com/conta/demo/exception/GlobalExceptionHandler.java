@@ -46,6 +46,6 @@ public class GlobalExceptionHandler {
                 .getDefaultMessage();
 
         return ResponseEntity.badRequest()
-                .body(new ErroResponse(400, ex.getMessage()));
+                .body(new ErroResponse(400, mensagem));
     }
 }
