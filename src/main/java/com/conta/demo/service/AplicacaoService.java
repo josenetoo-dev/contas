@@ -11,6 +11,8 @@ import com.conta.demo.model.Categoria;
 import com.conta.demo.repository.AplicacaoRepository;
 import com.conta.demo.repository.CategoriaRepository;
 import com.conta.demo.repository.ContaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,11 +57,9 @@ public class AplicacaoService {
     }
 
     // read
-    public List<AplicacaoResponse> read() {
-        return aplicacaoRepository.findAll()
-                .stream()
-                .map(AplicacaoResponse::new)
-                .toList();
+    public Page<AplicacaoResponse> read(Pageable pageable) {
+        return aplicacaoRepository.findAll(pageable)
+                .map(AplicacaoResponse::new);
     }
 
     // update

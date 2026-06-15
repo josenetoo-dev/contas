@@ -5,11 +5,12 @@ import com.conta.demo.dto.conta.ContaResponse;
 import com.conta.demo.service.ContaService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -31,8 +32,10 @@ public class ContaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ContaResponse>> read() {
-        return ResponseEntity.ok(service.read());
+    public ResponseEntity<Page<ContaResponse>> read(
+            @PageableDefault(size = 10, sort = "id") Pageable pageable) {
+
+        return ResponseEntity.ok(service.read(pageable));
     }
 
     @GetMapping("/{id}")

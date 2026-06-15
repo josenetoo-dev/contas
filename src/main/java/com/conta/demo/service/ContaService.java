@@ -12,8 +12,11 @@ import com.conta.demo.model.Email;
 import com.conta.demo.repository.AplicacaoRepository;
 import com.conta.demo.repository.ContaRepository;
 import com.conta.demo.repository.EmailRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
@@ -64,11 +67,9 @@ public class ContaService {
 
     // read
     @Transactional(readOnly = true)
-    public List<ContaResponse> read() {
-        return contaRepository.findAll()
-                .stream()
-                .map(ContaResponse::new)
-                .toList();
+    public Page<ContaResponse> read(Pageable pageable) {
+        return contaRepository.findAll(pageable)
+                .map(ContaResponse::new);
     }
 
     // update
