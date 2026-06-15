@@ -5,36 +5,26 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "conta")
 public class Conta {
-
-    public enum Status {
-        ATIVA,
-        INATIVA
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "aplicacao_id")
+    @JoinColumn(name = "aplicacao_id", nullable = false)
     private Aplicacao aplicacao;
 
     @ManyToOne
-    @JoinColumn(name = "email_id")
+    @JoinColumn(name = "email_id", nullable = false)
     private Email email;
 
-    // Defini uma frase dentro dele por padrão
     private String nomeUsuario;
 
-    // Defini uma frase dentro dele por padrão
     private String senha;
-
-    private Status status = Status.ATIVA;
 
     public Conta() {
     }
 
-    public Conta(Aplicacao aplicacao, Email email, String nomeUsuario, String senha, Status status) {
+    public Conta(Aplicacao aplicacao, Email email, String nomeUsuario, String senha) {
         this.aplicacao = aplicacao;
         this.email = email;
         this.nomeUsuario = nomeUsuario;
@@ -75,13 +65,5 @@ public class Conta {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }

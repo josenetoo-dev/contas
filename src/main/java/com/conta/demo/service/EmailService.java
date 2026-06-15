@@ -24,7 +24,6 @@ public class EmailService {
     }
 
     // Verificação de Id
-    @Transactional(readOnly = true)
     public Email verificarId(Long id) {
         return emailRepository.findById(id)
                 .orElseThrow(() -> new EmailNaoEncontradoException("Email não encontrado"));

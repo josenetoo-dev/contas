@@ -14,7 +14,7 @@ public class Aplicacao {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
     public Aplicacao() {

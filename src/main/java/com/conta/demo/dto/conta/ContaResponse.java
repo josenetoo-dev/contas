@@ -1,39 +1,39 @@
 package com.conta.demo.dto.conta;
 
-import com.conta.demo.model.Aplicacao;
-import com.conta.demo.model.Categoria;
 import com.conta.demo.model.Conta;
-import com.conta.demo.model.Email;
 
 public class ContaResponse {
     private Long id;
-    private Aplicacao aplicacaoId;
-    private Email email;
-    private Categoria categoria;
+    private Long aplicacaoId;
+    private Long emailId;
     private String nomeDeUsuario;
     private String senha;
-    private Conta.Status status;
+
+    private String categoriaNome;
+    private String aplicacaoNome;
+    private String email;
 
     public ContaResponse(Conta conta) {
         this.id = conta.getId();
-        this.aplicacaoId = conta.getAplicacao();
-        this.email = conta.getEmail();
-        this.categoria = conta.getAplicacao().getCategoria();
+        this.aplicacaoId = conta.getAplicacao().getId();
+        this.email = conta.getEmail().getEmail();
         this.nomeDeUsuario = conta.getNomeUsuario();
         this.senha = conta.getSenha();
-        this.status = conta.getStatus();
+        this.categoriaNome = conta.getAplicacao().getCategoria().getNome();
+        this.aplicacaoNome = conta.getAplicacao().getNome();
+        this.emailId = conta.getEmail().getId();
     }
 
     public Long getId() {
         return id;
     }
 
-    public Aplicacao getAplicacaoId() {
+    public Long getAplicacaoId() {
         return aplicacaoId;
     }
 
-    public Email getEmail() {
-        return email;
+    public Long getEmailId() {
+        return emailId;
     }
 
     public String getNomeDeUsuario() {
@@ -44,7 +44,15 @@ public class ContaResponse {
         return senha;
     }
 
-    public Conta.Status getStatus() {
-        return status;
+    public String getCategoriaNome() {
+        return categoriaNome;
+    }
+
+    public String getAplicacaoNome() {
+        return aplicacaoNome;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

@@ -95,7 +95,6 @@ public class AplicacaoService {
     // buscar por id  / buscar por categoria / buscar por nome da aplicação
 
     // buscar por id
-    @Transactional(readOnly = true)
     public AplicacaoResponse buscarPorId(Long id) {
         Aplicacao aplicacao = verificarId(id);
 
@@ -117,6 +116,7 @@ public class AplicacaoService {
     }
 
     // buscar por nome aplicação
+    @Transactional(readOnly = true)
     public AplicacaoResponse buscarPorNomeDaAplicacao(String nome) {
         Aplicacao aplicacao = aplicacaoRepository.findByNome(nome)
                 .orElseThrow(() -> new AplicacaoNaoEncontradaException("Aplicação não encontrada"));

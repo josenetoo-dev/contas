@@ -2,7 +2,6 @@ package com.conta.demo.controller;
 
 import com.conta.demo.dto.aplicacao.AplicacaoRequest;
 import com.conta.demo.dto.aplicacao.AplicacaoResponse;
-import com.conta.demo.dto.categoria.CategoriaResponse;
 import com.conta.demo.service.AplicacaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/aplicacoes")
 public class AplicacaoController {

@@ -2,7 +2,7 @@ package com.conta.demo.service;
 
 import com.conta.demo.dto.categoria.CategoriaRequest;
 import com.conta.demo.dto.categoria.CategoriaResponse;
-import com.conta.demo.exception.conflit.CategoriaComContaException;
+import com.conta.demo.exception.conflit.CategoriaComAplicacoesException;
 import com.conta.demo.exception.conflit.NomeJaExisteException;
 import com.conta.demo.exception.notfound.CategoriaNaoEncontradaException;
 import com.conta.demo.model.Categoria;
@@ -25,10 +25,9 @@ public class CategoriaService {
     }
 
     // verificação de id
-    @Transactional(readOnly = true)
     public Categoria verificarId(Long id)  {
         return categoriaRepository.findById(id)
-                .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria não enccntrada"));
+                .orElseThrow(() -> new CategoriaNaoEncontradaException("Categoria não encontrada"));
     }
 
     // create
@@ -75,7 +74,7 @@ public class CategoriaService {
         Categoria categoria = verificarId(id);
 
         if (aplicacaoRepository.existsByCategoriaId(categoria.getId())) {
-            throw new CategoriaComContaException("Não é possível excluir esta categoria, pois existem aplicações cadastradas nela");
+            throw new CategoriaComAplicacoesException("Não é possível excluir esta categoria, pois existem aplicações cadastradas nela");
         }
 
         categoriaRepository.delete(categoria);
