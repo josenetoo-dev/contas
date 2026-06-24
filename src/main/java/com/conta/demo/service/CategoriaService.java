@@ -61,7 +61,7 @@ public class CategoriaService {
         Categoria categoria = verificarId(id);
 
         if (categoriaRepository.existsByNomeAndIdNot(request.getNome(), id)) {
-            throw new NomeJaExisteException("Nome já existe");
+            throw new NomeJaExisteException("Nome já");
         }
 
         categoria.setNome(request.getNome());
