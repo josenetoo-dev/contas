@@ -8,6 +8,8 @@ import com.conta.demo.exception.notfound.EmailNaoEncontradoException;
 import com.conta.demo.model.Email;
 import com.conta.demo.repository.ContaRepository;
 import com.conta.demo.repository.EmailRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,11 +49,9 @@ public class EmailService {
 
     // read
     @Transactional(readOnly = true)
-    public List<EmailResponse> read() {
-        return emailRepository.findAll()
-                .stream()
-                .map(EmailResponse::new)
-                .toList();
+    public Page<EmailResponse> read(Pageable pageable) {
+        return emailRepository.findAll(pageable)
+                .map(EmailResponse::new);
     }
 
     // Update

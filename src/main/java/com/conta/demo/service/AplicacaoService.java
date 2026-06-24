@@ -57,6 +57,7 @@ public class AplicacaoService {
     }
 
     // read
+    @Transactional(readOnly = true)
     public Page<AplicacaoResponse> read(Pageable pageable) {
         return aplicacaoRepository.findAll(pageable)
                 .map(AplicacaoResponse::new);

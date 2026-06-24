@@ -8,6 +8,8 @@ import com.conta.demo.exception.notfound.CategoriaNaoEncontradaException;
 import com.conta.demo.model.Categoria;
 import com.conta.demo.repository.AplicacaoRepository;
 import com.conta.demo.repository.CategoriaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,12 +48,12 @@ public class CategoriaService {
 
     // read
     @Transactional(readOnly = true)
-    public List<CategoriaResponse> read() {
-        return categoriaRepository.findAll()
-                .stream()
-                .map(CategoriaResponse::new)
-                .toList();
+    public Page<CategoriaResponse> read(Pageable pageable) {
+        return categoriaRepository.findAll(pageable)
+                .map(CategoriaResponse::new);
     }
+
+
 
     // update
     @Transactional

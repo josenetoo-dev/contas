@@ -4,6 +4,9 @@ import com.conta.demo.dto.categoria.CategoriaRequest;
 import com.conta.demo.dto.categoria.CategoriaResponse;
 import com.conta.demo.service.CategoriaService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +31,9 @@ public class CategoriaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoriaResponse>> readCategorias() {
-        return ResponseEntity.ok(service.read());
+    public ResponseEntity<Page<CategoriaResponse>> readCategorias(
+            @PageableDefault(size = 10, sort = "id")Pageable pageable) {
+        return ResponseEntity.ok(service.read(pageable));
     }
 
     @PutMapping("/{id}")
