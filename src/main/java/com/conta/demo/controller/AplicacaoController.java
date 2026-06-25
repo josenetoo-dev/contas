@@ -26,9 +26,7 @@ public class AplicacaoController {
 
     @PostMapping
     public ResponseEntity<AplicacaoResponse> createAplicacao(@Valid @RequestBody AplicacaoRequest request) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(service.create(request));
+        return ResponseEntity.ok(service.create(request));
     }
 
     @GetMapping
